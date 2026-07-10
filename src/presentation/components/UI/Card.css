@@ -1,0 +1,27 @@
+.card {
+  transition: all 0.2s ease;
+}
+
+.card-pricing {
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-main);
+  border-radius: var(--rounded-lg);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--color-text-muted);
+}
+
+.card-color-block {
+  width: 100%;
+  background-color: #A3E635; /* block-lime 임의지정 */
+  color: var(--color-text-main);
+  border-radius: var(--rounded-lg);
+  padding: var(--spacing-xxl);
+}
+
+.card-color-block-navy {
+  width: 100%;
+  background-color: var(--color-primary-trust); /* block-navy */
+  color: #FFFFFF; /* inverse-ink */
+  border-radius: var(--rounded-lg);
+  padding: var(--spacing-xxl);
+}

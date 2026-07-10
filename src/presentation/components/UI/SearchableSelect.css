@@ -1,0 +1,87 @@
+.searchable-select-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  position: relative;
+  width: 100%;
+}
+
+.select-label {
+  font-size: 0.875rem;
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+}
+
+.select-input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.select-input {
+  width: 100%;
+  padding: 12px 16px;
+  border: 1px solid #CBD5E1;
+  border-radius: var(--rounded-lg);
+  font-size: 1rem;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.select-input:focus {
+  border-color: var(--color-primary-trust);
+}
+
+.clear-btn {
+  position: absolute;
+  right: 12px;
+  font-size: 1.2rem;
+  color: var(--color-text-muted);
+}
+
+.select-dropdown {
+  position: absolute;
+  bottom: calc(100% + 4px); /* 하단 바텀시트에 위치하므로 위로 펼쳐지도록 변경 */
+  left: 0;
+  right: 0;
+  background: var(--color-bg-surface);
+  border: 1px solid #CBD5E1;
+  border-radius: var(--rounded-lg);
+  box-shadow: 0 -4px 6px rgba(0,0,0,0.1);
+  z-index: 20;
+  max-height: 200px;
+  display: flex;
+  flex-direction: column;
+}
+
+.select-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.select-item {
+  padding: 12px 16px;
+  cursor: pointer;
+  border-bottom: 1px solid #F1F5F9;
+}
+
+.select-item:hover {
+  background-color: var(--color-bg-subtle);
+}
+
+.select-item.empty {
+  color: var(--color-text-muted);
+  cursor: default;
+}
+
+.select-actions {
+  padding: 8px;
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid #CBD5E1;
+  background-color: var(--color-bg-subtle);
+}

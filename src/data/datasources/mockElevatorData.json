@@ -1,0 +1,32 @@
+[
+  {
+    "id": "E001",
+    "stationName": "강남역",
+    "status": "정상",
+    "locationType": "지상",
+    "coordinates": {
+      "lat": 37.4979,
+      "lng": 127.0276
+    }
+  },
+  {
+    "id": "E002",
+    "stationName": "신논현역",
+    "status": "점검",
+    "locationType": "지하",
+    "coordinates": {
+      "lat": 37.5045,
+      "lng": 127.0245
+    }
+  },
+  {
+    "id": "E003",
+    "stationName": "양재역",
+    "status": "고장",
+    "locationType": "지상",
+    "coordinates": {
+      "lat": 37.4841,
+      "lng": 127.0346
+    }
+  }
+]
