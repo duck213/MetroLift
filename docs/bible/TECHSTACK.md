@@ -7,7 +7,7 @@
 • Frontend (모바일 앱/웹):
  o Framework: Flutter 또는 React Native (Android와 iOS 동시 지원 가능).
  o Styling: 사용자 요청에 따른 그라디언트(Gradient) 디자인 적용 및 접근성을 고려한 고대비 UI.
- o Maps: Google Maps JavaScript API를 사용하여 글로벌 현지화(Localization) 기능 적용.
+ o Maps: OpenStreetMap API를 사용하여 글로벌 현지화(Localization) 기능 적용.
 
 ---
 
@@ -20,4 +20,4 @@
 • Data & APIs:
  o Location Data: 서울교통공사 편의시설 위치정보 API 및 국가철도공단 역사별 엘리베이터 이동동선 API.
  o Real-time Status: 지하철 승강기 가동현황 API (정상, 점검, 고장 상태 확인).
- o Localization: Google Maps의 language 및 region 매개변수를 활용한 다국어 지원
+ o Localization: OpenStreetMap API의 language 및 region 매개변수를 활용한 다국어 지원

@@ -21,28 +21,29 @@
   - `stationName` (선택): 특정 지하철역만 필터링할 때 사용
 - **Response (Success - 200 OK)**:
   ```json
-  [
-    {
-      "id": "E001",
-      "stationName": "강남역",
-      "status": "정상",
-      "locationType": "지상",
-      "coordinates": {
-        "lat": 37.4979,
-        "lng": 127.0276
+  {
+    "value": [
+      {
+        "id": "EL-0001",
+        "station_name": "서울역(1)",
+        "line": "1호선",
+        "source": "서울교통공사",
+        "elevator_id": "내부#1",
+        "exit_number": "시청 방면5-1",
+        "location_detail": "시청 방면5-1",
+        "location_type": "지하",
+        "start_floor": "2",
+        "end_floor": "1",
+        "capacity_persons": "11",
+        "capacity_kg": "750",
+        "status": "정상",
+        "lat": 37.557295,
+        "lng": 126.973120,
+        "has_coordinates": true
       }
-    },
-    {
-      "id": "E002",
-      "stationName": "신논현역",
-      "status": "점검",
-      "locationType": "지하",
-      "coordinates": {
-        "lat": 37.5045,
-        "lng": 127.0245
-      }
-    }
-  ]
+    ],
+    "Count": 1
+  }
   ```
 
 ### 1.2 단일 엘리베이터 상세 정보 조회
@@ -130,3 +131,27 @@
   ```
 - **Response (Success - 201 Created)**: 생성된 즐겨찾기 정보 반환
 
+### 4.2 즐겨찾기 목록 조회
+사용자가 저장한 즐겨찾기 목록을 조회합니다.
+
+- **URL**: `/api/bookmarks?user_id={user_id}`
+- **Method**: `GET`
+- **Response (Success - 200 OK)**:
+  ```json
+  [
+    {
+      "id": "B12345678",
+      "user_id": "user_12345",
+      "target_id": "E001",
+      "target_type": "ELEVATOR",
+      "created_at": "2023-10-27T10:00:00Z"
+    }
+  ]
+  ```
+
+### 4.3 즐겨찾기 삭제
+지정된 즐겨찾기 항목을 삭제합니다.
+
+- **URL**: `/api/bookmarks/{bookmark_id}`
+- **Method**: `DELETE`
+- **Response (Success - 204 No Content)**: 삭제 성공 시 빈 본문 반환
