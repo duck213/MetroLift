@@ -3,7 +3,6 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet'
 import L from 'leaflet'
 import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
-import './App.css'
 
 // 💡 교육용 주석: 백엔드 API의 주소입니다. (도커 백엔드가 8000번 포트에서 실행 중)
 const API_BASE = 'http://localhost:8000'
@@ -26,6 +25,14 @@ interface Elevator {
   lat: number | null
   lng: number | null
   has_coordinates: boolean
+}
+
+interface Bookmark {
+  id: string
+  user_id: string
+  target_id: string
+  target_type: string
+  created_at: string
 }
 
 interface Stats {
@@ -70,17 +77,20 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('')
   const [selectedLine, setSelectedLine] = useState<string | null>(null)
   const [flyTo, setFlyTo] = useState<{ lat: number; lng: number } | null>(null)
+  const [bookmarks, setBookmarks] = useState<Bookmark[]>([])
 
   // 💡 교육용 주석: 앱이 처음 켜질 때 백엔드에서 데이터를 가져옵니다.
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [elevRes, statsRes] = await Promise.all([
+        const [elevRes, statsRes, bookmarkRes] = await Promise.all([
           axios.get(`${API_BASE}/api/elevators?has_coordinates=true`),
           axios.get(`${API_BASE}/api/elevators/stats`),
+          axios.get(`${API_BASE}/api/bookmarks?user_id=test_user`),
         ])
         setElevators(elevRes.data)
         setStats(statsRes.data)
+        setBookmarks(bookmarkRes.data)
       } catch (error) {
         console.error('데이터 로드 실패:', error)
       } finally {
@@ -105,7 +115,6 @@ function App() {
     })
   }, [elevators, searchTerm, selectedLine])
 
-  // 역 단위로 그룹핑하여 사이드바에 표시 (같은 역 엘리베이터 묶기)
   const groupedByStation = useMemo(() => {
     const groups: Record<string, Elevator[]> = {}
     filtered.forEach(e => {
@@ -115,6 +124,26 @@ function App() {
     })
     return Object.entries(groups).sort((a, b) => a[0].localeCompare(b[0]))
   }, [filtered])
+
+  const toggleBookmark = async (stationName: string, e: React.MouseEvent) => {
+    e.stopPropagation()
+    const existing = bookmarks.find(b => b.target_id === stationName)
+    try {
+      if (existing) {
+        await axios.delete(`${API_BASE}/api/bookmarks/${existing.id}`)
+        setBookmarks(bookmarks.filter(b => b.id !== existing.id))
+      } else {
+        const res = await axios.post(`${API_BASE}/api/bookmarks/`, {
+          user_id: 'test_user',
+          target_id: stationName,
+          target_type: 'STATION'
+        })
+        setBookmarks([...bookmarks, res.data])
+      }
+    } catch (err) {
+      console.error('Bookmark toggle failed', err)
+    }
+  }
 
   if (loading) {
     return (
@@ -195,8 +224,17 @@ function App() {
                 }}
               >
                 <div className="elevator-card__header">
-                  <span className="elevator-card__station">{stationName}</span>
-                  <span className="elevator-card__line">{elevs[0].line}</span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                    <span className="elevator-card__station">{stationName}</span>
+                    <span className="elevator-card__line">{elevs[0].line}</span>
+                  </div>
+                  <button 
+                    className={`bookmark-btn ${bookmarks.some(b => b.target_id === stationName) ? 'active' : ''}`}
+                    onClick={(e) => toggleBookmark(stationName, e)}
+                    title="즐겨찾기"
+                  >
+                    {bookmarks.some(b => b.target_id === stationName) ? '★' : '☆'}
+                  </button>
                 </div>
                 <div className="elevator-card__detail">
                   엘리베이터 {elevs.length}대 | {elevs[0].source}
