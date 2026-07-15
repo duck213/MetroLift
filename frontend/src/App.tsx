@@ -5,7 +5,7 @@ import axios from 'axios'
 import 'leaflet/dist/leaflet.css'
 
 // 💡 교육용 주석: 백엔드 API의 주소입니다. (도커 백엔드가 8000번 포트에서 실행 중)
-const API_BASE = 'http://localhost:8000'
+const API_BASE = 'https://metrolift-backend.vercel.app'
 
 // 💡 교육용 주석: 엘리베이터 데이터의 TypeScript 타입 정의 (데이터의 설계도)
 interface Elevator {
@@ -228,7 +228,7 @@ function App() {
                     <span className="elevator-card__station">{stationName}</span>
                     <span className="elevator-card__line">{elevs[0].line}</span>
                   </div>
-                  <button 
+                  <button
                     className={`bookmark-btn ${bookmarks.some(b => b.target_id === stationName) ? 'active' : ''}`}
                     onClick={(e) => toggleBookmark(stationName, e)}
                     title="즐겨찾기"
